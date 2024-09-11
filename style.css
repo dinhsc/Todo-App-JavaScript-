@@ -1,0 +1,13 @@
+.main-page {
+    text-align: center; /* Centrer verticalement */
+    /* border-color: blue;
+    border: solid; */
+}
+
+.attribution { 
+    font-size: 11px;
+    text-align: center;
+}
+.attribution a {
+     color: hsl(228, 45%, 44%);
+}
