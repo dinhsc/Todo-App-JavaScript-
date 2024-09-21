@@ -8,6 +8,7 @@ let index = 0; // index: number
 
 function checkDeleteButton() { // checkDeleteButton(): void
     const completed_task = tasks_list.some(task => task.completed); // completed_task: boolean
+    // retourn vrai s'il y'a au moins 1 conditions valide
     delete_button.disabled = !completed_task;
 }
 
@@ -47,7 +48,7 @@ function adding_task() { // adding_task(): void
             checkDeleteButton();
             
         })
-
+        console.log("adding task :", tasks_list);
         output_task.append(new_task);
         output_task.append(new_task_label);
         input_task.value = "";
@@ -64,53 +65,39 @@ function adding_task() { // adding_task(): void
 
 // Traiter le cas des suppression : Mettre à jours les index
 function delete_task() { // delete_task(): void
-    console.log("ICI");
+    // console.log("ICI", tasks_list);
     output_task.textContent = "";
     // On retourne une nouvelle liste de tâches ne contenant pas les tâches accompli
     const undone_task = tasks_list.filter(tasks_list => tasks_list.completed != true); // return : liste de tâches
-    console.log("BLABLA", undone_task[0].id)
+    // console.log("Liste actuelle :", undone_task);
     for (let index = 0; index < undone_task.length; index++) {
-        console.log("long", undone_task.length)
         const update_task = document.createElement("input");
         update_task.type = "checkbox";
-        update_task.id = undone_task[index].id;
-
+        update_task.id = index; //undone_task[index].id;
+        undone_task[index].id = index;
         const update_task_label = document.createElement("label");
         update_task_label.textContent = undone_task[index].name;
-        console.log("coucou",update_task.textContent);
 
-
-         // Réattribuer le gestionnaire d'événements pour la nouvelle tâche
+        // Réattribuer le gestionnaire d'événements pour la nouvelle tâche (on rentre ici après avoir supprimé au moins 1 fois)
         update_task.addEventListener("change", () => {
+            // (on rentre ici après avoir supprimé au moins 1 fois)
             for (let i = 0; i < tasks_list.length; i++) {
                 if (tasks_list[i].id == update_task.id) {
                     tasks_list[i].completed = update_task.checked;
                 }
             }
             checkDeleteButton();
-
             // Point important : La checkbox est coché visuellement mais cet événement est nécessaire
             // pour que le back soit à jour également
         });
-
         
         output_task.append(update_task);
         output_task.append(update_task_label);
     }
-
     tasks_list = undone_task;
-    console.log("LISTE 1", tasks_list);
-    console.log("LISTE 2", undone_task);
-    // for (let i = 0; i < tasks_list.length; i++) {
-    //     if (tasks_list[i].completed) {
-    //         console.log("Indice : ", tasks_list[i])
-    //         console.log("avant", tasks_list)
-    
-    //         tasks_list.splice(tasks_list[i], 2);
-    //         console.log("après", tasks_list)
-    //     }
+    // On désactive à nouveau le bouton après avoir supprimé les tâches accomplies
     checkDeleteButton();
-
+    // Le bouton supprime tout le monde car tout le monde à le même index
 }
 
 add_button.addEventListener("click", adding_task);
