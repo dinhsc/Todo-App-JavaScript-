@@ -1,7 +1,28 @@
 .main-page {
     text-align: center; /* Centrer verticalement */
-    /* border-color: blue;
-    border: solid; */
+    
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+#input-task {
+    width: 300px; /* Modifie cette valeur selon tes besoins */
+    padding: 10px; /* Ajoute un peu d'espace intérieur pour un rendu plus agréable */
+    font-size: 16px; /* Augmente la taille du texte si nécessaire */
+}
+
+.output-task div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-left: 7%;
+    margin-right: 10%;
+    border-color: blue;
+    border: solid;
+}
+
+.output-task label {
+    margin-left: 10px;
 }
 
 .attribution { 
