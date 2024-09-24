@@ -4,7 +4,7 @@ let add_button = document.querySelector("#add-button"); // add_button: HTMLButto
 let delete_button = document.querySelector("#delete-button"); // delete_button: HTMLButtonElement | null
 let input_task = document.querySelector("#input-task"); // input_task: HTMLInputElement | null
 let output_task = document.querySelector(".output-task"); // output_task: HTMLElement | null
-let GLOBAL_INDEX = 0; // index: number
+let TASKS_LEFT = 0; // index: number
 
 function checkDeleteButton() { // checkDeleteButton(): void
     const completed_task = tasks_list.some(task => task.completed); // completed_task: boolean
@@ -19,11 +19,11 @@ function adding_task() { // adding_task(): void
 
         const new_task = document.createElement("input");
         new_task.type = "checkbox";
-        new_task.id = GLOBAL_INDEX;
+        new_task.id = TASKS_LEFT;
 
         const new_task_label = document.createElement("label");
         new_task_label.textContent = input_task.value;
-        new_task_label.setAttribute("for", GLOBAL_INDEX); // Ajout du "for" pour lier le label à la checkbox
+        new_task_label.setAttribute("for", TASKS_LEFT); // Ajout du "for" pour lier le label à la checkbox
         
         // Ajoute un gestionnaire de clic sur l'ensemble du conteneur pour trigger la checkbox
         task_container.addEventListener("click", () => {
@@ -52,7 +52,7 @@ function adding_task() { // adding_task(): void
         output_task.append(task_container);
 
         input_task.value = "";
-        GLOBAL_INDEX++;
+        TASKS_LEFT++;
 
     } else {
         alert("Complete the input !");
@@ -100,11 +100,10 @@ function delete_task() { // delete_task(): void
 
         // On prend le dernier index de la boucle + 1 (ou la dernière longueur du tableau undone_task)
         // Pour préserver la suite logique des prochaines tâches ajoutés
-        GLOBAL_INDEX = undone_task.length;
-
+        TASKS_LEFT = undone_task.length;
     }
     
-    if (undone_task == 0) { GLOBAL_INDEX = 0}
+    if (undone_task == 0) { TASKS_LEFT = 0}
     tasks_list = undone_task;
     // On désactive à nouveau le bouton après avoir supprimé les tâches accomplies
     checkDeleteButton();

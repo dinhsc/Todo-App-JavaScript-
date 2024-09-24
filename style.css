@@ -1,8 +1,10 @@
 .main-page {
     text-align: center; /* Centrer verticalement */
     
-    margin-left: 25%;
-    margin-right: 25%;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-color: blue;
+    border: solid;
 }
 
 #input-task {
@@ -31,4 +33,29 @@
 }
 .attribution a {
      color: hsl(228, 45%, 44%);
+}
+
+.task-management {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* Tu peux ajuster la marge en fonction de ton design */
+    
+}
+
+.items-left {
+    flex: 1;
+    text-align: left;
+}
+
+.filters {
+    display: flex;
+    gap: 20px; /* Espace entre les filtres (All, Active, Completed) */
+    flex: 1;
+    justify-content: center;
+}
+
+.clear-completed {
+    flex: 1;
+    text-align: right;
 }
