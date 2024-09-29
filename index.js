@@ -6,6 +6,12 @@ let input_task = document.querySelector("#input-task"); // input_task: HTMLInput
 let output_task = document.querySelector(".output-task"); // output_task: HTMLElement | null
 let TASKS_LEFT = 0; // index: number
 
+let items_left = document.querySelector(".items-left");
+let filters = document.querySelector(".filters");
+let all_tasks = document.querySelector("#all-tasks");
+let active_tasks = document.querySelector("#active-tasks");
+let comp_tasks = document.querySelector("#completed-tasks");
+
 function checkDeleteButton() { // checkDeleteButton(): void
     const completed_task = tasks_list.some(task => task.completed); // completed_task: boolean
     // retourn vrai s'il y'a au moins 1 conditions valide
@@ -53,6 +59,7 @@ function adding_task() { // adding_task(): void
 
         input_task.value = "";
         TASKS_LEFT++;
+        updateItemsLeft()
 
     } else {
         alert("Complete the input !");
@@ -107,9 +114,27 @@ function delete_task() { // delete_task(): void
     tasks_list = undone_task;
     // On désactive à nouveau le bouton après avoir supprimé les tâches accomplies
     checkDeleteButton();
+    updateItemsLeft()
     console.log("Après suppréssion", tasks_list);
-    // Le bouton supprime tout le monde car tout le monde à le même index
+}
+
+function updateItemsLeft() { items_left.textContent = `${TASKS_LEFT} items left` }
+
+function tasksListFilter(taskList) {
+
 }
 
 add_button.addEventListener("click", adding_task);
 delete_button.addEventListener("click", delete_task);
+
+all_tasks.addEventListener("click", () => {})
+
+active_tasks.addEventListener("click", () => {
+    console.log("ok");
+    filters.style.color = "red";
+    active_tasks.style.color = "blue";
+    
+})
+
+// Affichage en fonction du filtrage
+// Sauvegarder les tâches complétées

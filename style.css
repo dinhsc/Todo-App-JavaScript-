@@ -3,8 +3,7 @@
     
     margin-left: 20%;
     margin-right: 20%;
-    border-color: blue;
-    border: solid;
+
 }
 
 #input-task {
@@ -53,6 +52,10 @@
     gap: 20px; /* Espace entre les filtres (All, Active, Completed) */
     flex: 1;
     justify-content: center;
+}
+
+.filters span{
+    cursor: pointer;
 }
 
 .clear-completed {
