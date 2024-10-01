@@ -40,14 +40,14 @@ function renderTasks(taskList) {
 
         // IMPORTANT : Ne pas oublier de remettre à jour les indexs de tasks_list après suppréssion + ajout
         tasks_list[index].id = index;
-
-        console.log(new_task.id);
         const task_label = document.createElement("label");
+        // En prenant "tasks_list" actuelle
         task_label.textContent = tasks_list[index].name;
         task_label.setAttribute("for", index);
 
         container.addEventListener("click", () => {
             new_task.checked = !new_task.checked;
+            // Pour trigger le bouton "Delete"
             tasks_list[index].completed = new_task.checked;
             updateDeleteButton();
         });
@@ -57,40 +57,13 @@ function renderTasks(taskList) {
         output_task.append(container);
 
     }
-    // taskList.forEach((task, index) => {
-
-    //     // tasks_list : 
-
-
-
-    //     const container = document.createElement("div");
-
-    //     const new_task = document.createElement("input");
-    //     new_task.type = "checkbox";
-    //     new_task.id = index;
-
-    //     const task_label = document.createElement("label");
-    //     task_label.textContent = task.name;
-    //     task_label.setAttribute("for", index);
-
-    //     container.addEventListener("click", () => {
-    //         new_task.checked = !new_task.checked;
-    //         task.completed = new_task.checked;
-    //         updateDeleteButton();
-    //     });
-
-    //     container.append(new_task);
-    //     container.append(task_label);
-    //     output_task.append(container);
-    // });
 
     TASKS_LEFT = taskList.filter(task => !task.completed).length;
     updateItemsLeft();
     updateDeleteButton();
 }
 
-function adding_task() { // adding_task(): void
-
+function addTask() { // adding_task(): void
     if (input_task.value != "") {
         // On stock les nouvelles tâches crées dans le tableau
         tasks_list.push({
@@ -102,6 +75,7 @@ function adding_task() { // adding_task(): void
         input_task.value = "";
 
         renderTasks(tasks_list);
+        console.log("Tâches restantes : ", tasks_list);
 
     } else {
         alert("Complete the input !");
@@ -110,31 +84,44 @@ function adding_task() { // adding_task(): void
 
 
 // Traiter le cas des suppression : Mettre à jours les index
-function delete_task() { // delete_task(): void
-
+function deleteTask() { // delete_task(): void
     const undone_task = tasks_list.filter(tasks_list => tasks_list.completed != true); // return : liste de tâches
+    const task_done = tasks_list.filter(task => task.completed);
+
+    // On met à jour tasks_list pour l'utiliser dans renderTasks
+    tasks_list = undone_task;
 
     renderTasks(undone_task);
-    tasks_list = undone_task;
- 
+
+    for (let index = 0; index < task_done.length; index++) {
+        console.log("ok", task_done[index].name);
+        complete_tasks_list.push({
+            id: complete_tasks_list.length,
+            name: task_done[index].name,
+            completed: true
+        });
+    }
+    console.log("Tâches accomplies : ", complete_tasks_list);
+
 }
 
+function completedTask() {
+    const task_done = tasks_list.filter(task => task.completed);
+
+}
 function creatingTaskList() {
 
 }
 function updateItemsLeft() { items_left.textContent = `${TASKS_LEFT} items left` }
 
 
-add_button.addEventListener("click", adding_task);
-delete_button.addEventListener("click", delete_task);
-all_tasks.addEventListener("click", () => {})
-active_tasks.addEventListener("click", () => {
-    console.log("ok");
-    // filters.style.color = "red";
-    // active_tasks.style.color = "blue";
-    
-})
+add_button.addEventListener("click", addTask);
+delete_button.addEventListener("click", deleteTask);
+// all_tasks.addEventListener("click", () => {})
+comp_tasks.addEventListener("click", completedTask);
 
+
+// Prochaines tâches à faire : 
 // Affichage en fonction du filtrage
 // Sauvegarder les tâches complétées
 
