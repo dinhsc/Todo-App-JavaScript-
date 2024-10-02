@@ -24,6 +24,7 @@ function updateDeleteButton() { // checkDeleteButton(): void
 function renderTasks(taskList) {
     output_task.textContent = "";
 
+    // On boucle sur la longueur de la liste entrante
     for (let index = 0; index < taskList.length; index++) {
 
         // 0: Object { id: 0, name: "ds", completed: false }
@@ -37,6 +38,7 @@ function renderTasks(taskList) {
         const new_task = document.createElement("input");
         new_task.type = "checkbox";
         new_task.id = index;
+        new_task.checked = taskList[index].completed; // Définir l'état de la checkbox en fonction de la tâche
 
         // IMPORTANT : Ne pas oublier de remettre à jour les indexs de tasks_list après suppréssion + ajout
         tasks_list[index].id = index;
@@ -105,20 +107,32 @@ function deleteTask() { // delete_task(): void
 
 }
 
-function completedTask() {
-    const task_done = tasks_list.filter(task => task.completed);
-
-}
-function creatingTaskList() {
-
-}
 function updateItemsLeft() { items_left.textContent = `${TASKS_LEFT} items left` }
 
 
 add_button.addEventListener("click", addTask);
+
 delete_button.addEventListener("click", deleteTask);
-// all_tasks.addEventListener("click", () => {})
-comp_tasks.addEventListener("click", completedTask);
+
+all_tasks.addEventListener("click", () => {
+    // Mettre aussi à jour tasks_list avec l'entrée attendue
+    tmp = tasks_list;
+    const all_tasks_list = tasks_list.concat(complete_tasks_list);
+    tasks_list = all_tasks_list;
+    renderTasks(all_tasks_list);
+    tasks_list = tmp;
+})
+
+active_tasks.addEventListener("click", () => { renderTasks(tasks_list); });
+
+comp_tasks.addEventListener("click", () => {
+    // Il faut mettre à jours tasks_list et le garder
+    // Car il est utilisé dans renderTasks
+    tmp = tasks_list;
+    tasks_list = complete_tasks_list;
+    renderTasks(complete_tasks_list);
+    tasks_list = tmp;
+});
 
 
 // Prochaines tâches à faire : 
