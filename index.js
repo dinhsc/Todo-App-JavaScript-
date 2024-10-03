@@ -51,6 +51,20 @@ function renderTasks(taskList) {
             new_task.checked = !new_task.checked;
             // Pour trigger le bouton "Delete"
             tasks_list[index].completed = new_task.checked;
+
+
+            // Changement de style, deux façon de faire :
+            // 1.
+            // if (new_task.checked) {
+            //     task_label.classList.toggle = "line-through";
+            // } else {
+            //     task_label.style.textDecoration = "none";
+            // }
+
+            // 2. Toggle
+            // Ajoute le style "task-done" si la tâche est cochée
+            task_label.classList.toggle("tasks-done", new_task.checked);
+
             updateDeleteButton();
         });
 
@@ -107,14 +121,26 @@ function deleteTask() { // delete_task(): void
 
 }
 
+// output_task.addEventListener("click", () => {
+//     console.log("ICI");
+//     const outputElements = output_task.children;
+//     console.log(outputElements);
+//     for (let i = 0; i < outputElements.length; i++) {
+//         if (outputElements[i].check = !outputElements[i].check) {
+//             console.log("OK", outputElements[i].check);
+//             outputElements[i].style.textDecoration = "line-through";
+//         }
+//     }
+
+// })
+
 function updateItemsLeft() { items_left.textContent = `${TASKS_LEFT} items left` }
 
 
 add_button.addEventListener("click", addTask);
-
 delete_button.addEventListener("click", deleteTask);
-
 all_tasks.addEventListener("click", () => {
+    updateStyleManagement(all_tasks);
     // Mettre aussi à jour tasks_list avec l'entrée attendue
     tmp = tasks_list;
     const all_tasks_list = tasks_list.concat(complete_tasks_list);
@@ -122,10 +148,12 @@ all_tasks.addEventListener("click", () => {
     renderTasks(all_tasks_list);
     tasks_list = tmp;
 })
-
-active_tasks.addEventListener("click", () => { renderTasks(tasks_list); });
-
+active_tasks.addEventListener("click", () => { 
+    updateStyleManagement(active_tasks);
+    renderTasks(tasks_list); 
+});
 comp_tasks.addEventListener("click", () => {
+    updateStyleManagement(comp_tasks);
     // Il faut mettre à jours tasks_list et le garder
     // Car il est utilisé dans renderTasks
     tmp = tasks_list;
@@ -133,6 +161,19 @@ comp_tasks.addEventListener("click", () => {
     renderTasks(complete_tasks_list);
     tasks_list = tmp;
 });
+
+function updateStyleManagement(selectedFilter) {
+    // Récupère tous les éléments enfants de l'élément "filters"
+    const filterElements = filters.children;
+
+    // Boucle sur tous les éléments de filtres et réinitialise leur couleur
+    for (let i = 0; i < filterElements.length; i++) {
+        filterElements[i].style.color = "#7d7f96"; // Réinitialise la couleur
+    }
+
+    // Applique la couleur bleue uniquement à l'élément sélectionné
+    selectedFilter.style.color = "#3867c5";
+}
 
 
 // Prochaines tâches à faire : 

@@ -1,30 +1,130 @@
+
+/* Ajoute ces styles pour t'assurer que l'image couvre toute la page */
+html, body {
+    margin: 0; /* Supprime les marges par défaut */
+    padding: 0; /* Supprime le padding par défaut */
+    width: 100%; /* Assure-toi que le body prenne toute la largeur */
+}
+
+#title {
+    font-size: xx-large;
+    display: flex;
+    justify-content: center;
+    color: rgb(236, 234, 234);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-image: url('images/bg-desktop-dark.jpg'); /* Remplace par le chemin de ton image */
+    background-size: 100% 200px; /* Largeur à 100% et hauteur à 200px */
+    background-repeat: no-repeat; /* Empêche la répétition de l'image */
+    background-position: top center;
+    background-color: #181824;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+    
+}
+
 .main-page {
     text-align: center; /* Centrer verticalement */
-    
-    margin-left: 20%;
-    margin-right: 20%;
-
+    margin-top: 8%;
 }
 
 #input-task {
-    width: 300px; /* Modifie cette valeur selon tes besoins */
+    width: 200px; /* Modifie cette valeur selon tes besoins */
     padding: 10px; /* Ajoute un peu d'espace intérieur pour un rendu plus agréable */
-    font-size: 16px; /* Augmente la taille du texte si nécessaire */
+    font-size: 15px; /* Augmente la taille du texte si nécessaire */
+    font-family: Arial, Helvetica, sans-serif;
+    border: none; /* Supprime la bordure par défaut */
+    outline: none; /* Supprime le contour lorsqu'on clique dans l'input */
+    background-color: transparent; /* Optionnel : rend le fond transparent */
+    color: #9697a5;
+    
+}
+
+.create-task {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border: solid;
+    border-color: #25273c;
+    border-radius: 5px;
+    background-color: #25273c;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    max-width: 420px; /* Limite la largeur à 600px, change si nécessaire */
+    width: 50vw; /* Largeur relative à la largeur de l'écran */
+    margin-left: auto; /* Centre horizontalement */
+    margin-right: auto; /* Centre horizontalement */
+}
+
+
+.bloc {
+    padding: 10px;
+    border: solid;
+    border-color: #25273c;
+    border-radius: 5px;
+    background-color: #25273c;
+    margin-top: 20px;
+    max-width: 420px; /* Limite la largeur à 600px, change si nécessaire */
+    width: 50vw; /* Largeur relative à la largeur de l'écran */
+    margin-left: auto; /* Centre horizontalement */
+    margin-right: auto; /* Centre horizontalement */
+    
+}
+
+.task-management {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 420px; /* Limite la largeur à 600px, change si nécessaire */
+    width: 50vw; /* Largeur relative à la largeur de l'écran */
+    margin-left: auto; /* Centre horizontalement */
+    margin-right: auto; /* Centre horizontalement */
+    color: #7d7f96;
+    gap: 30px; /* Augmente l'espacement entre les sections */
+
+
 }
 
 .output-task div {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 5px;
-    margin-left: 7%;
-    margin-right: 10%;
-    border-color: blue;
-    border: solid;
+    margin-bottom: 10px;
+    max-width: 420px; /* Limite la largeur à 600px */
+    width: 80vw; /* Largeur relative à la largeur de l'écran */
+    margin-left: auto; /* Centre horizontalement */
+    margin-right: auto; /* Centre horizontalement */
+    color: #adafc6;
+    border-bottom: 1px solid #4b4e6d; /* Ajoute une bordure en bas de chaque tâche */
+    padding-top: 5px; /* Ajoute de l'espace autour du texte pour plus de lisibilité */
+    padding-bottom: 10px;
+    padding-left: 20px;
+
 }
+
+
+/* 1. max-width: 600px; :
+    Définit une largeur maximale de 600 pixels pour éviter que les éléments ne deviennent trop larges sur les écrans très larges. Tu peux ajuster cette valeur selon tes besoins.
+
+2. width: 80vw; :
+    Utilise 80vw (80% de la largeur de la fenêtre) pour que les éléments prennent une largeur relative à l'écran, tout en étant responsives.
+
+3.margin-left: auto; et margin-right: auto; :
+    Centre horizontalement l'élément par rapport à son parent, pour qu'il soit toujours centré quelle que soit la taille de l'écran. */
 
 .output-task label {
     margin-left: 10px;
 }
+
+.output-task {
+    overflow: hidden; /* Cache tout dépassement horizontal */
+}
+
 
 .attribution { 
     font-size: 11px;
@@ -34,13 +134,12 @@
      color: hsl(228, 45%, 44%);
 }
 
-.task-management {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px; /* Tu peux ajuster la marge en fonction de ton design */
-    
+
+.tasks-done {
+    text-decoration: line-through;
+    color: #5c5c64;
 }
+
 
 .items-left {
     flex: 1;
@@ -62,3 +161,6 @@
     flex: 1;
     text-align: right;
 }
+
+
+
