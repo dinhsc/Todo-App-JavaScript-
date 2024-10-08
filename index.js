@@ -39,7 +39,7 @@ function renderTasks(taskList) {
         new_task.type = "checkbox";
         new_task.id = index;
         new_task.checked = taskList[index].completed; // Définir l'état de la checkbox en fonction de la tâche
-
+        
         // IMPORTANT : Ne pas oublier de remettre à jour les indexs de tasks_list après suppréssion + ajout
         tasks_list[index].id = index;
         const task_label = document.createElement("label");
@@ -47,26 +47,19 @@ function renderTasks(taskList) {
         task_label.textContent = tasks_list[index].name;
         task_label.setAttribute("for", index);
 
+        // On met à jour le style des tâches complété (en dehors de l'évent "click" de container pour trigger l'update)
+        // Si on ne le met pas ici, les tâches complété n'auront pas le changement de style (car trigger uniquement avec l'évent "click")
+        updateTaskStyle(task_label, tasks_list[index].completed)
+
         container.addEventListener("click", () => {
             new_task.checked = !new_task.checked;
             // Pour trigger le bouton "Delete"
             tasks_list[index].completed = new_task.checked;
 
-
-            // Changement de style, deux façon de faire :
-            // 1.
-            // if (new_task.checked) {
-            //     task_label.classList.toggle = "line-through";
-            // } else {
-            //     task_label.style.textDecoration = "none";
-            // }
-
-            // 2. Toggle
-            // Ajoute le style "task-done" si la tâche est cochée
-            task_label.classList.toggle("tasks-done", new_task.checked);
-
+            updateTaskStyle(task_label, tasks_list[index].completed)
             updateDeleteButton();
         });
+        
 
         container.append(new_task);
         container.append(task_label);
@@ -108,7 +101,8 @@ function deleteTask() { // delete_task(): void
     tasks_list = undone_task;
 
     renderTasks(undone_task);
-
+    const taskChild = output_task.children;
+    console.log("CHILDREN", taskChild);
     for (let index = 0; index < task_done.length; index++) {
         console.log("ok", task_done[index].name);
         complete_tasks_list.push({
@@ -118,23 +112,16 @@ function deleteTask() { // delete_task(): void
         });
     }
     console.log("Tâches accomplies : ", complete_tasks_list);
-
 }
 
-// output_task.addEventListener("click", () => {
-//     console.log("ICI");
-//     const outputElements = output_task.children;
-//     console.log(outputElements);
-//     for (let i = 0; i < outputElements.length; i++) {
-//         if (outputElements[i].check = !outputElements[i].check) {
-//             console.log("OK", outputElements[i].check);
-//             outputElements[i].style.textDecoration = "line-through";
-//         }
+// function updateActiveTask(taskChecking, checked) {
+//     if (!taskChecking.cheked) {
+//         complete_tasks_list
 //     }
-
-// })
-
+// }
 function updateItemsLeft() { items_left.textContent = `${TASKS_LEFT} items left` }
+
+function updateTaskStyle(taskLabel, completed) { taskLabel.classList.toggle("tasks-done", completed); }
 
 
 add_button.addEventListener("click", addTask);
@@ -165,7 +152,6 @@ comp_tasks.addEventListener("click", () => {
 function updateStyleManagement(selectedFilter) {
     // Récupère tous les éléments enfants de l'élément "filters"
     const filterElements = filters.children;
-
     // Boucle sur tous les éléments de filtres et réinitialise leur couleur
     for (let i = 0; i < filterElements.length; i++) {
         filterElements[i].style.color = "#7d7f96"; // Réinitialise la couleur
@@ -177,9 +163,7 @@ function updateStyleManagement(selectedFilter) {
 
 
 // Prochaines tâches à faire : 
-// Affichage en fonction du filtrage
-// Sauvegarder les tâches complétées
-
+// Mettre correctement à jour les tâches complétées
 
 
 // Ancienne version :
