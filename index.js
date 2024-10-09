@@ -41,22 +41,23 @@ function renderTasks(taskList) {
         new_task.checked = taskList[index].completed; // Définir l'état de la checkbox en fonction de la tâche
         
         // IMPORTANT : Ne pas oublier de remettre à jour les indexs de tasks_list après suppréssion + ajout
-        tasks_list[index].id = index;
+        taskList[index].id = index;
         const task_label = document.createElement("label");
         // En prenant "tasks_list" actuelle
-        task_label.textContent = tasks_list[index].name;
+        task_label.textContent = taskList[index].name;
         task_label.setAttribute("for", index);
 
         // On met à jour le style des tâches complété (en dehors de l'évent "click" de container pour trigger l'update)
         // Si on ne le met pas ici, les tâches complété n'auront pas le changement de style (car trigger uniquement avec l'évent "click")
-        updateTaskStyle(task_label, tasks_list[index].completed)
-
+        updateTaskStyle(task_label, taskList[index].completed)
         container.addEventListener("click", () => {
             new_task.checked = !new_task.checked;
             // Pour trigger le bouton "Delete"
-            tasks_list[index].completed = new_task.checked;
+            taskList[index].completed = new_task.checked;
+            console.log("dd", taskList[index]);
 
-            updateTaskStyle(task_label, tasks_list[index].completed)
+            // updateActiveTask()
+            updateTaskStyle(task_label, taskList[index].completed)
             updateDeleteButton();
         });
         
@@ -94,17 +95,15 @@ function addTask() { // adding_task(): void
 
 // Traiter le cas des suppression : Mettre à jours les index
 function deleteTask() { // delete_task(): void
-    const undone_task = tasks_list.filter(tasks_list => tasks_list.completed != true); // return : liste de tâches
+    const undone_task = tasks_list.filter(tasks_list => tasks_list.completed != true); // return : liste de tâches active
     const task_done = tasks_list.filter(task => task.completed);
 
     // On met à jour tasks_list pour l'utiliser dans renderTasks
+    // On affichera uniquement les tâches non complétés
     tasks_list = undone_task;
-
     renderTasks(undone_task);
-    const taskChild = output_task.children;
-    console.log("CHILDREN", taskChild);
+
     for (let index = 0; index < task_done.length; index++) {
-        console.log("ok", task_done[index].name);
         complete_tasks_list.push({
             id: complete_tasks_list.length,
             name: task_done[index].name,
@@ -114,11 +113,11 @@ function deleteTask() { // delete_task(): void
     console.log("Tâches accomplies : ", complete_tasks_list);
 }
 
-// function updateActiveTask(taskChecking, checked) {
-//     if (!taskChecking.cheked) {
-//         complete_tasks_list
-//     }
-// }
+function updateActiveTask() {
+    for (let i = 0; i < complete_tasks_list; i++) {
+        console.log("ICI", complete_tasks_list[i].completed)
+    }
+}
 function updateItemsLeft() { items_left.textContent = `${TASKS_LEFT} items left` }
 
 function updateTaskStyle(taskLabel, completed) { taskLabel.classList.toggle("tasks-done", completed); }
@@ -129,24 +128,25 @@ delete_button.addEventListener("click", deleteTask);
 all_tasks.addEventListener("click", () => {
     updateStyleManagement(all_tasks);
     // Mettre aussi à jour tasks_list avec l'entrée attendue
-    tmp = tasks_list;
+    // tmp = tasks_list;
     const all_tasks_list = tasks_list.concat(complete_tasks_list);
-    tasks_list = all_tasks_list;
+    // tasks_list = all_tasks_list;
     renderTasks(all_tasks_list);
-    tasks_list = tmp;
+    // tasks_list = tmp;
 })
 active_tasks.addEventListener("click", () => { 
     updateStyleManagement(active_tasks);
     renderTasks(tasks_list); 
 });
 comp_tasks.addEventListener("click", () => {
+    console.log("COMPLETE", complete_tasks_list);
     updateStyleManagement(comp_tasks);
     // Il faut mettre à jours tasks_list et le garder
     // Car il est utilisé dans renderTasks
-    tmp = tasks_list;
-    tasks_list = complete_tasks_list;
+    // tmp = tasks_list;
+    // tasks_list = complete_tasks_list;
     renderTasks(complete_tasks_list);
-    tasks_list = tmp;
+    // tasks_list = tmp;
 });
 
 function updateStyleManagement(selectedFilter) {
@@ -163,7 +163,7 @@ function updateStyleManagement(selectedFilter) {
 
 
 // Prochaines tâches à faire : 
-// Mettre correctement à jour les tâches complétées
+// Corriger les problèmes avec tasks_list
 
 
 // Ancienne version :
